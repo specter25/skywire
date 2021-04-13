@@ -141,6 +141,8 @@ build-deploy: ## Build for deployment Docker images
 	${OPTS} go build ${BUILD_OPTS_DEPLOY} -o /release/apps/skychat ./cmd/apps/skychat
 	${OPTS} go build ${BUILD_OPTS_DEPLOY} -o /release/apps/skysocks ./cmd/apps/skysocks
 	${OPTS} go build ${BUILD_OPTS_DEPLOY} -o /release/apps/skysocks-client ./cmd/apps/skysocks-client
+	${OPTS} go build ${BUILD_OPTS_DEPLOY} -o /release/apps/vpn-client ./cmd/apps/vpn-client
+	${OPTS} go build ${BUILD_OPTS_DEPLOY} -o /release/apps/vpn-server ./cmd/apps/vpn-server
 
 github-release: ## Create a GitHub release
 	goreleaser --rm-dist

@@ -31,6 +31,7 @@ var (
 	localSKStr = flag.String("sk", "", "Local SecKey")
 	passcode   = flag.String("passcode", "", "Passcode to authenticate connecting users")
 	secure     = flag.Bool("secure", true, "Forbid connections from clients to server local network")
+	docker     = flag.Bool("docker", false, "Allow proper start in a container")
 )
 
 func main() {
@@ -73,6 +74,7 @@ func main() {
 	log.Infof("Got app listener, bound to %d", vpnPort)
 
 	srvCfg := vpn.ServerConfig{
+		Docker:   *docker,
 		Passcode: *passcode,
 		Secure:   *secure,
 	}

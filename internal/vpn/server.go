@@ -81,31 +81,35 @@ func NewServer(cfg ServerConfig, l logrus.FieldLogger) (*Server, error) {
 func (s *Server) Serve(l net.Listener) error {
 	serveErr := errors.New("already serving")
 	s.serveOnce.Do(func() {
-		if err := EnableIPv4Forwarding(); err != nil {
-			serveErr = fmt.Errorf("error enabling IPv4 forwarding: %w", err)
-			return
-		}
-		s.log.Infoln("Set IPv4 forwarding = 1")
-		defer func() {
-			if err := SetIPv4ForwardingValue(s.ipv4ForwardingVal); err != nil {
-				s.log.WithError(err).Errorln("Error reverting IPv4 forwarding")
-			} else {
-				s.log.Infof("Set IPv4 forwarding = %s", s.ipv4ForwardingVal)
+		if !s.cfg.Docker {
+			// this stuff is truly needed to run on the host machine. but when we deal with the container,
+			// this won't work and will break the startup. it needs to be run on the host machine manually
+			if err := EnableIPv4Forwarding(); err != nil {
+				serveErr = fmt.Errorf("error enabling IPv4 forwarding: %w", err)
+				return
 			}
-		}()
+			s.log.Infoln("Set IPv4 forwarding = 1")
+			defer func() {
+				if err := SetIPv4ForwardingValue(s.ipv4ForwardingVal); err != nil {
+					s.log.WithError(err).Errorln("Error reverting IPv4 forwarding")
+				} else {
+					s.log.Infof("Set IPv4 forwarding = %s", s.ipv4ForwardingVal)
+				}
+			}()
 
-		if err := EnableIPv6Forwarding(); err != nil {
-			serveErr = fmt.Errorf("error enabling IPv6 forwarding: %w", err)
-			return
-		}
-		s.log.Infoln("Set IPv6 forwarding = 1")
-		defer func() {
-			if err := SetIPv6ForwardingValue(s.ipv6ForwardingVal); err != nil {
-				s.log.WithError(err).Errorln("Error reverting IPv6 forwarding")
-			} else {
-				s.log.Infof("Set IPv6 forwarding = %s", s.ipv6ForwardingVal)
+			if err := EnableIPv6Forwarding(); err != nil {
+				serveErr = fmt.Errorf("error enabling IPv6 forwarding: %w", err)
+				return
 			}
-		}()
+			s.log.Infoln("Set IPv6 forwarding = 1")
+			defer func() {
+				if err := SetIPv6ForwardingValue(s.ipv6ForwardingVal); err != nil {
+					s.log.WithError(err).Errorln("Error reverting IPv6 forwarding")
+				} else {
+					s.log.Infof("Set IPv6 forwarding = %s", s.ipv6ForwardingVal)
+				}
+			}()
+		}
 
 		if err := EnableIPMasquerading(s.defaultNetworkInterface); err != nil {
 			serveErr = fmt.Errorf("error enabling IP masquerading for %s: %w", s.defaultNetworkInterface, err)
