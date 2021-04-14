@@ -488,7 +488,7 @@ func initUptimeTracker(v *Visor) bool {
 }
 
 func initTrustedVisors(v *Visor) bool {
-	const trustedVisorsTransportType = tptypes.STCPR
+	const trustedVisorsTransportType = tptypes.STCP
 
 	go func() {
 		time.Sleep(transport.TrustedVisorsDelay)
