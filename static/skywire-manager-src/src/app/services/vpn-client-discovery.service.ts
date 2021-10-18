@@ -82,7 +82,7 @@ export class VpnClientDiscoveryService {
   /**
    * URL of the discovery service.
    */
-  private readonly discoveryServiceUrl = 'https://sd.skycoin.com/api/services?type=vpn';
+  private readonly discoveryServiceUrl = 'http://service.discovery.skywire.cc/api/services?type=vpn';
 
   /**
    * Servers obtained from the discovery service.
