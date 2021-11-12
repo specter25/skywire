@@ -1,0 +1,15 @@
+- PR #957 Release v0.5.0
+- PR #906 Add language portuguese
+- PR #876 Delete vpn env test
+- PR #857 Update mainnet_rules.md
+- PR #819 Update mainnet_rules.md
+- PR #814 Release/v0.4.2
+- PR #787 Update README.md
+- PR #769 Update mainnet_rules.md
+- PR #768 Update mainnet_rules.md
+- PR #752 Feature/push master dockerhub
+- PR #744 Update mainnet_rules.md
+- PR #741 Update mainnet_rules.md
+- PR #726 Update mainnet_rules.md
+- PR #723 Update mainnet_rules.md
+- PR #680 Skywire v0.4.0
